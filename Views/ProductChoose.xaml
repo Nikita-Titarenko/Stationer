@@ -1,0 +1,141 @@
+﻿<Page x:Class="Stationer.ProductChoose"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Stationer"
+      mc:Ignorable="d" 
+      Background="White"
+      HorizontalAlignment="Stretch"
+      VerticalAlignment="Stretch"
+      Title="ProductChoose" Loaded="Page_Loaded">
+    <Page.Resources>
+        <local:StationerDataSet x:Key="stationerDataSet"/>
+        <CollectionViewSource x:Key="productViewSource" Source="{Binding product, Source={StaticResource stationerDataSet}}"/>
+        <local:ArticleToImageConverter x:Key="ArticleToImageConverter"/>
+    </Page.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="4*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+            <ScrollViewer VerticalScrollBarVisibility="Visible" VerticalAlignment="Stretch">
+                <StackPanel Orientation="Vertical" x:Name="filterPanel">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Style="{StaticResource textBlock}" Text="Мінімальна ціна"></TextBlock>
+                        <TextBox Style="{StaticResource textBox}" x:Name="minPrice"></TextBox>
+                        <TextBlock Style="{StaticResource textBlock}" Text="Максимальна ціна"></TextBlock>
+                        <TextBox Style="{StaticResource textBox}" x:Name="maxPrice"></TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource textBlock}" Text="Торгова марка"></TextBlock>
+                        <StackPanel Orientation="Vertical" x:Name="brachCheckBoxes">
+
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+                </ScrollViewer>
+        </Grid>
+        
+    <Grid Grid.Column="1">
+        <ScrollViewer VerticalScrollBarVisibility="Visible" VerticalAlignment="Stretch">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock x:Name="titleTextBlock" HorizontalAlignment="Center" FontSize="25"/>
+                            <TextBlock x:Name="productCount" FontSize="25" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" x:Name="sortPanel">
+                            <TextBlock FontSize="20" Text="Сортувати: " VerticalAlignment="Center"></TextBlock>
+                            <ComboBox FontSize="20" Width="200" SelectionChanged="ComboBox_SelectionChanged" VerticalAlignment="Center" SelectedIndex="4">
+                                <ComboBoxItem Content="Спочатку дешевші" Tag="price/ASC"/>
+                                <ComboBoxItem Content="Спочатку дорожчі" Tag="price/DESC"/>
+                                <ComboBoxItem Content="Акції" Tag="discount_rate/DESC"/>
+                                <ComboBoxItem Content="Новинки" Tag="creation_date/DESC"/>
+                                <ComboBoxItem Content="Популярність" Tag="dbo.MonthlySales(p.article)/DESC" />
+                            </ComboBox>
+                        </StackPanel>
+                    </Grid>
+
+                    <ItemsControl ItemsSource="{Binding Source={StaticResource productViewSource}}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="5"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Style="{StaticResource button}" Click="Product_Click"  Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Tag="{Binding article}">
+                                    <StackPanel Orientation="Vertical">
+                                        <Image HorizontalAlignment="Center" Source="{Binding article, Converter={StaticResource ArticleToImageConverter}}" Height="200"/>
+                                        <TextBlock Text="{Binding name}" HorizontalAlignment="Center" FontSize="15" TextWrapping="Wrap" Height="60" TextAlignment="Center"/>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="1" Text="{Binding article}" HorizontalAlignment="Left" FontSize="25"/>
+                                            <Border Style="{StaticResource border}" HorizontalAlignment="Right" Grid.Column="2" Background="Red">
+                                                <TextBlock Background="#FFFF4557" Text="{Binding discount_rate, StringFormat='{}{0} %'}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="25">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="Visibility" Value="Visible"></Setter>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding discount_rate}" Value="{x:Null}">
+                                                                    <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </Border>
+                                        </Grid>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding price_discount, StringFormat='{}{0} грн'}" HorizontalAlignment="Center" FontSize="25" Margin="10"/>
+                                            <TextBlock Text="{Binding price, StringFormat='{}{0} грн'}" HorizontalAlignment="Center" FontSize="25" Margin="10" TextDecorations="Strikethrough">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="Visibility" Value="Visible"></Setter>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding discount_rate}" Value="{x:Null}">
+                                                                <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </StackPanel>
+                                        <TextBlock Text="{Binding availability}" Style="{StaticResource textBlock}"/>
+
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
+                                            <Button Content="-" Width="30" Height="30" Margin="5" Click="DecreaseQuantity_Click"/>
+                                            <TextBox Name="QuantityTextBox" Text="{Binding initial_quantity}" Width="50" Height="30" TextAlignment="Center" Margin="5" VerticalContentAlignment="Center"/>
+                                            <Button Content="+" Width="30" Height="30" Margin="5" Click="IncreaseQuantity_Click"/>
+                                            <Button Click="PutInCart_Click"  Tag="{Binding article}" Width="50" Height="50" Margin="5" >
+                                                <Image Source="/Icons/cart_icon.png" Stretch="Uniform"/>
+                                            </Button>
+                                        </StackPanel>
+
+                                    </StackPanel>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <StackPanel Orientation="Horizontal" x:Name="pageButtonsStackPanel" HorizontalAlignment="Center">
+                        
+                    </StackPanel>
+                    <TextBlock x:Name="subcategoryDescriptionTextBlock" FontSize="25" Margin="20" TextWrapping="Wrap"/>
+
+                </StackPanel>
+        </ScrollViewer>
+    </Grid>
+    </Grid>
+</Page>

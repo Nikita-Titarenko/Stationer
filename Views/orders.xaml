@@ -1,0 +1,72 @@
+﻿<Page x:Class="Stationer.orders"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Stationer"
+      mc:Ignorable="d" 
+            Background="White"
+HorizontalAlignment="Stretch"
+VerticalAlignment="Stretch"
+      Title="orders" Loaded="Page_Loaded">
+
+    <Page.Resources>
+        <local:StationerDataSet x:Key="stationerDataSet"/>
+        <CollectionViewSource x:Key="orderViewSource" Source="{Binding order, Source={StaticResource stationerDataSet}}"/>
+    </Page.Resources>
+    <Grid>
+        <Grid Margin="10" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="Номер замовлення" Style="{StaticResource hugeTextBlock}" Grid.Column="0"/>
+            <TextBlock Text="Дата і час" Style="{StaticResource hugeTextBlock}" Grid.Column="1" />
+            <TextBlock Text="Кількість" Style="{StaticResource hugeTextBlock}" Grid.Column="2" />
+            <TextBlock Text="Ціна" Style="{StaticResource hugeTextBlock}" Grid.Column="3" />
+            <TextBlock Text="Деталі" Style="{StaticResource hugeTextBlock}" Grid.Column="4" />
+        </Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Visible" Margin="0,100,0,0">
+            <ItemsControl ItemsSource="{Binding Source={StaticResource orderViewSource}}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="1"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Border BorderThickness="1" BorderBrush="Gray" Grid.Column="0" >
+                                <TextBlock Text="{Binding order_number}" Style="{StaticResource textBlock}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <Border BorderThickness="1" BorderBrush="Gray" Grid.Column="1">
+                                <TextBlock Text="{Binding date_time}" Style="{StaticResource textBlock}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <Border BorderThickness="1" BorderBrush="Gray" Grid.Column="2">
+                                <TextBlock Text="{Binding totalQuantity}" Style="{StaticResource textBlock}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <Border BorderThickness="1" BorderBrush="Gray" Grid.Column="3">
+                                <TextBlock Text="{Binding totalPrice}" Style="{StaticResource textBlock}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <Border BorderThickness="1" BorderBrush="Gray" Grid.Column="4">
+                                <Button Content="Деталі" Tag="{Binding order_number}" Style="{StaticResource button}" Click="orderDetailsButton_Click"/>
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</Page>

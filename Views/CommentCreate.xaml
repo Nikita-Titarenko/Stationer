@@ -1,0 +1,117 @@
+﻿<Page x:Class="Stationer.CommentCreate"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Stationer"
+      mc:Ignorable="d" 
+      Background="White"
+      HorizontalAlignment="Stretch"
+      VerticalAlignment="Stretch"
+      Title="CommentCreate" Loaded="Page_Loaded">
+    <Page.Resources>
+        <local:StationerDataSet x:Key="stationerDataSet"/>
+        <CollectionViewSource x:Key="productViewSource" Source="{Binding product, Source={StaticResource stationerDataSet}}"/>
+        <local:ArticleToImageConverter x:Key="ArticleToImageConverter"/>
+    </Page.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <ItemsControl ItemsSource="{Binding Source={StaticResource productViewSource}}" Grid.Column="0">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Style="{StaticResource button}" Click="productButton_Click" x:Name="productButton"  Margin="10" HorizontalAlignment="Stretch" Height="450" Tag="{Binding article}">
+            <StackPanel Orientation="Vertical">
+                <Image HorizontalAlignment="Center" Source="{Binding article, Converter={StaticResource ArticleToImageConverter}}" Height="200"/>
+                <TextBlock Text="{Binding name}" HorizontalAlignment="Center" FontSize="15" TextWrapping="Wrap" Height="60" TextAlignment="Center"/>
+                <TextBlock Text="{Binding article}" HorizontalAlignment="Center" FontSize="25"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding price_discount, StringFormat='{}{0} грн'}" HorizontalAlignment="Center" FontSize="25" Margin="10">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Visibility" Value="Visible"></Setter>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding discount_rate}" Value="{x:Null}">
+                                                    <Setter Property="Grid.ColumnSpan" Value="2"></Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                <TextBlock Grid.Column="1" Text="{Binding price, StringFormat='{}{0} грн'}" HorizontalAlignment="Center" FontSize="25" Margin="10" TextDecorations="Strikethrough">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Visibility" Value="Visible"></Setter>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding discount_rate}" Value="{x:Null}">
+                                                    <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
+                                <TextBlock Text="Кількість:  " FontSize="25"/>
+                                <TextBlock Text="{Binding quantity}" FontSize="25"/>
+                </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
+                                <TextBlock Text="Номер замовлення:  " FontSize="25" />
+                                <TextBlock Text="{Binding order_number}" FontSize="25"/>
+                            </StackPanel>
+
+                        </StackPanel>
+        </Button>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <Grid Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <TextBlock x:Name="createCommentTextBlock" Style="{StaticResource titleTextBlock}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Створити відгук на товар"></TextBlock>
+
+            <TextBlock Style="{StaticResource textBlock}" Grid.Row="1" Grid.Column="0" Text="Коментар: "></TextBlock>
+            <TextBox x:Name="commentTextBox" Grid.Row="1" Grid.Column="1" Margin="10"></TextBox>
+            <TextBlock x:Name="ratingTextBlock" Style="{StaticResource textBlock}"  Grid.Row="2" Grid.Column="0" Text="Оцінка: " VerticalAlignment="Center"></TextBlock>
+            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" x:Name="statButtonPanel">
+                <Button x:Name="rateButton1" Tag="1" Style="{StaticResource whiteStarButton}"></Button>
+                <Button x:Name="rateButton2" Tag="2" Style="{StaticResource whiteStarButton}"></Button>
+                <Button x:Name="rateButton3" Tag="3" Style="{StaticResource whiteStarButton}"></Button>
+                <Button x:Name="rateButton4" Tag="4" Style="{StaticResource whiteStarButton}"></Button>
+                <Button x:Name="rateButton5" Tag="5" Style="{StaticResource whiteStarButton}"></Button>
+            </StackPanel>
+
+            <TextBlock Style="{StaticResource textBlock}" Grid.Row="3" Grid.Column="0" Text="Переваги/плючи: "></TextBlock>
+            <TextBox x:Name="advantagesTextBox" Grid.Row="3" Grid.Column="1" Margin="10"></TextBox>
+
+            <TextBlock Style="{StaticResource textBlock}" Grid.Row="4" Grid.Column="0" Text="Недоліки/мінуси: "></TextBlock>
+            <TextBox x:Name="disadvantagesTextBox" Grid.Row="4" Grid.Column="1" Margin="10"></TextBox>
+
+            <TextBlock Style="{StaticResource textBlock}" x:Name="exceptionTextBlock" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Text="Коментар повинен обов'язково мати зміст і оцінку" Visibility="Collapsed"></TextBlock>
+            
+            <Button Style="{StaticResource button}" x:Name="createCommentButton" Click="createCommentButton_Click" Grid.Row="6" HorizontalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="2" Content="Створити"></Button>
+        </Grid>
+    </Grid>
+</Page>

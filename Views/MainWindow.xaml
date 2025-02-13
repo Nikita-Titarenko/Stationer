@@ -1,0 +1,161 @@
+﻿<Window x:Name="___Без_имени_" x:Class="Stationer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Stationer"
+        mc:Ignorable="d"
+        Title="Перо і папір" WindowState="Maximized" Width="1920" Height="1080" Loaded="Window_Loaded">
+    <Window.Resources>
+        <local:StationerDataSet x:Key="stationerDataSet"/>
+        <CollectionViewSource x:Key="categoryViewSource" Source="{Binding category, Source={StaticResource stationerDataSet}}"/>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource categoryViewSource}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*">
+
+            </RowDefinition>
+
+            <RowDefinition Height="2*">
+
+            </RowDefinition>
+
+            <RowDefinition Height="10*">
+
+            </RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*">
+
+                </ColumnDefinition>
+                <ColumnDefinition Width="4*">
+
+                </ColumnDefinition>
+                <ColumnDefinition Width="1*">
+
+                </ColumnDefinition>
+                <ColumnDefinition Width="1*">
+
+                </ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Style="{StaticResource button}" Content="Перо і папір" FontSize="30" Grid.Column="0" Background="White" Name="MainPageButton" Click="MainPageButton_Click"/>
+            <Grid Grid.Column="1">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*">
+
+                    </ColumnDefinition>
+                    <ColumnDefinition Width="10*">
+
+                    </ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button Style="{StaticResource button}" x:Name="searchButton" Grid.Column="0" Click="searchButton_Click">
+                    <Image Source="/Icons/search_icon.png">
+
+                    </Image>
+                </Button>
+                <TextBox x:Name="searchTextBox" Grid.Column="1" Text="Пошук" FontSize="44" KeyDown="searchTextBox_KeyDown"></TextBox>
+            </Grid>
+            <Button Style="{StaticResource button}" Width="200" Grid.Column="2" Click="CartButton_Click">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition>
+
+                        </RowDefinition>
+                        <RowDefinition>
+
+                        </RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*">
+
+                        </ColumnDefinition>
+                        <ColumnDefinition Width="2*">
+
+                        </ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" Grid.RowSpan="2" Source="/Icons/cart_icon.png"></Image>
+                    <TextBlock Text="Кошик" FontSize="27" Grid.Column="1" Grid.Row="0"></TextBlock>
+                    <TextBlock x:Name="CartSumTextBlock" Text="0 грн" FontSize="22" Grid.Column="2" Grid.Row="1"></TextBlock>
+                </Grid>
+            </Button>
+
+            <Button Style="{StaticResource button}" x:Name="account_button" Width="200" Grid.Column="3" Visibility="Collapsed" MouseEnter="ShowMenu" MouseLeave="HideMenu">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition>
+
+                        </RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*">
+
+                        </ColumnDefinition>
+                        <ColumnDefinition Width="2*">
+
+                        </ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Image x:Name="profile_icon" Grid.Column="0" Source="/Icons/profile_icon.png"></Image>
+                    <TextBlock x:Name="name" FontSize="27" Grid.Column="1" Grid.Row="0"></TextBlock>
+                </Grid>
+            </Button>
+
+            <Popup x:Name="menuPopup" PlacementTarget="{Binding ElementName=account_button}" IsOpen="False" MouseEnter="ShowMenu" MouseLeave="HideMenu">
+                <StackPanel Background="White" Width="200">
+                    <Button FontSize="23" Style="{StaticResource button}" Content="Особисті дані" Click="personalDataButton_Click"/>
+                    <Button FontSize="23" Style="{StaticResource button}" Content="Мої замовлення"  Click="MyOrdersButton_Click"/>
+                </StackPanel>
+            </Popup>
+
+            <Button Style="{StaticResource button}" x:Name="login_button" Width="200" Grid.Column="3" Visibility="Visible" Click="LoginWindowCreate">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition>
+
+                        </RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*">
+
+                        </ColumnDefinition>
+                        <ColumnDefinition Width="2*">
+
+                        </ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Image x:Name="login_icon" Grid.Column="0" Source="/Icons/enter_icon.png"></Image>
+                    <TextBlock x:Name="logn_textBlock" Text="Увійти" FontSize="33" Grid.Column="1" Grid.Row="0"></TextBlock>
+                </Grid>
+            </Button>
+        </Grid>
+
+        <ItemsControl ItemsSource="{Binding}" Grid.Row="1">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel HorizontalAlignment="Center"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Style="{StaticResource button}" Click="CategoryButton_Click" Tag="{Binding category_id}" Margin="10">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="{Binding name}" HorizontalAlignment="Center" FontSize="20"/>
+                            <TextBlock Text="{Binding subcategoryCount}" HorizontalAlignment="Center" FontSize="15"/>
+                            <TextBlock Text="{Binding productCount}" HorizontalAlignment="Center" FontSize="15"/>
+                            <TextBlock Text="{Binding minAndMaxProductPrice}" HorizontalAlignment="Center" FontSize="15"/>
+                        </StackPanel>
+                    </Button>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <Frame Grid.Row="2" Source="{Binding}" x:Name="mainFrame" NavigationUIVisibility="Hidden">
+
+        </Frame>
+
+    </Grid>
+</Window>

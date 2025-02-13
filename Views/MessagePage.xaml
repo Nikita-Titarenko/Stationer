@@ -1,0 +1,17 @@
+﻿<Page x:Class="Stationer.MessagePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Stationer"
+      mc:Ignorable="d" 
+            Background="White"
+HorizontalAlignment="Stretch"
+VerticalAlignment="Stretch"
+      Title="orderCreated">
+
+    <StackPanel Orientation="Vertical">
+        <TextBlock TextAlignment="Center" x:Name="messageTextBlock" TextWrapping="Wrap" FontSize="35"></TextBlock>
+        <Button Style="{StaticResource button}" HorizontalAlignment="Center" x:Name="mainPageButton" Content="Перейти на головну сторінку" Click="mainPageButton_Click" FontSize="35"></Button>
+    </StackPanel>
+</Page>

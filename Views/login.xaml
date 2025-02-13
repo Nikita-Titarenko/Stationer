@@ -1,0 +1,38 @@
+﻿<Page x:Class="Stationer.login"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Stationer"
+      mc:Ignorable="d"
+            Background="White"
+HorizontalAlignment="Stretch"
+VerticalAlignment="Stretch"
+      Title="login">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Style="{StaticResource textBlock}" Grid.Row="0" Grid.ColumnSpan="2"  HorizontalAlignment="Center" TextWrapping="Wrap" Text="Увійти" VerticalAlignment="Top" FontSize="65"/>
+        <TextBlock Style="{StaticResource textBlock}" Grid.Row="1" Grid.Column="0" Margin="0, 0, 30, 0" HorizontalAlignment="Right" TextWrapping="Wrap" Text="Логін:" VerticalAlignment="Top"  FontSize="55"/>
+        <TextBox Style="{StaticResource textBox}" x:Name="loginTextBox" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="645"  FontSize="55"/>
+        <TextBlock Grid.Row="2" Grid.Column="0" Margin="0, 0, 30, 0" HorizontalAlignment="Right" TextWrapping="Wrap" Text="Пароль:" VerticalAlignment="Top"  FontSize="55"/>
+        <TextBox Style="{StaticResource textBox}" x:Name="passwordTextBox" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="645" FontSize="55"/>
+        <TextBlock x:Name="exceptionTextBlock" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Логін або пароль введені неправильно" VerticalAlignment="Top"  FontSize="55" Visibility="Collapsed" Foreground="#FFF72727"/>
+        <Button Style="{StaticResource button}" Grid.Row="4" Grid.ColumnSpan="2" Content="Увійти" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="55" Click="LoginButton_Click"/>
+        <Button Style="{StaticResource button}" Grid.Row="5" Grid.ColumnSpan="2" Content="Зареєструватися" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="55" Click="RegisterButton_Click"/>
+
+
+    </Grid>
+</Page>

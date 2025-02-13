@@ -1,0 +1,53 @@
+﻿<Page x:Class="Stationer.personalDataChange"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Stationer"
+      mc:Ignorable="d" 
+                  Background="White"
+HorizontalAlignment="Stretch"
+VerticalAlignment="Stretch"
+      Title="personalDataChange" Loaded="Page_Loaded">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+
+        <TextBlock Style="{StaticResource textBlock}" Grid.Row="0" Grid.ColumnSpan="4"  HorizontalAlignment="Center" TextWrapping="Wrap" Text="Особисті дані" VerticalAlignment="Top" FontSize="65"/>
+        <TextBlock Style="{StaticResource textBlock}" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Повне ім'я" VerticalAlignment="Top"  FontSize="35"/>
+        <TextBox Style="{StaticResource textBox}" Grid.Row="1" Grid.Column="1" x:Name="fullNameTextBox" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="645"  FontSize="35"/>
+        <TextBlock Style="{StaticResource textBlock}" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Стать" VerticalAlignment="Top" FontSize="35"/>
+        <ComboBox Style="{StaticResource comboBox}" Grid.Row="1" Grid.Column="3" x:Name="genderComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="35">
+            <ComboBoxItem Content="Чоловік"></ComboBoxItem>
+            <ComboBoxItem Content="Жінка"></ComboBoxItem>
+        </ComboBox>
+        <TextBlock Style="{StaticResource textBlock}" Grid.Row="2" Grid.Column="0" TextWrapping="Wrap" Text="Електронна пошта" VerticalAlignment="Top"  FontSize="35"/>
+        <TextBox Style="{StaticResource textBox}" Grid.Row="2" Grid.Column="1" x:Name="emailTextBox" VerticalAlignment="Top" FontSize="35"/>
+        <TextBlock Style="{StaticResource textBlock}" Grid.Row="2" Grid.Column="2" TextWrapping="Wrap" Text="Телефон" VerticalAlignment="Top"  FontSize="35"/>
+        <TextBox Style="{StaticResource textBox}" Grid.Row="2" Grid.Column="3" x:Name="phoneTextBox" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="35"/>
+        <TextBlock Style="{StaticResource textBlock}" Grid.Row="3" Grid.Column="0" x:Name="birthdayDateTextBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="День народження" VerticalAlignment="Top"  FontSize="35"/>
+        <TextBox Style="{StaticResource textBox}" Grid.Row="3" Grid.Column="1" x:Name="birthdayDateTextBox" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="35"/>
+        <TextBlock Style="{StaticResource textBlock}" Grid.Row="3" Grid.Column="2" TextWrapping="Wrap" Text="Спосіб оплати" VerticalAlignment="Top"  FontSize="35"/>
+        <ComboBox Style="{StaticResource comboBox}" Grid.Row="3" Grid.Column="3" x:Name="paymentMethodTextBox" VerticalAlignment="Top" FontSize="35">
+        </ComboBox>
+        <TextBlock Style="{StaticResource textBlock}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Спосіб доставки" VerticalAlignment="Top"  FontSize="35"/>
+        <ComboBox Style="{StaticResource comboBox}" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" x:Name="deliveryMethodTextBox" Text="" VerticalAlignment="Top" FontSize="35">
+        </ComboBox>
+        <Button Style="{StaticResource button}" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="4" x:Name="ConfirmButton" HorizontalAlignment="Center" Content="Змінити" VerticalAlignment="Top"  FontSize="35" Click="ConfirmButton_Click"/>
+    </Grid>
+</Page>
